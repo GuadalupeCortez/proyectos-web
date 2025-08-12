@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Carnitas Chilo — Pedidos</title>
+  <meta name="description" content="Carnitas Don Pepe - Haz tu pedido por WhatsApp o teléfono" />
+  <style>
+    /* --- Estilos básicos --- */
+    :root{
+      --bg:#fff7f0;
+      --primary:#d84315;
+      --accent:#ffb74d;
+      --card:#ffffff;
+      --text:#2b2b2b;
+      --muted:#6b6b6b;
+      --shadow: 0 6px 18px rgba(0,0,0,0.08);
+      --radius:12px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:linear-gradient(180deg,var(--bg),#ffe9d6);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.4;
+    }
+
+    header{
+    background: var(--primary);
+    background-size: cover;       /* Para que cubra todo el header */
+    background-position: center;  /* Para centrar la imagen */
+    background-repeat: no-repeat; /* Para que no se repita */
+    color:#fff;
+    padding:28px 16px;
+    text-align:center;
+    border-bottom-left-radius:18px;
+    border-bottom-right-radius:18px;
+    box-shadow:var(--shadow);
+    }
+    header h1{margin:0;font-size:clamp(20px,4vw,28px);letter-spacing:0.3px}
+    header p{margin:6px 0 0;font-size:14px;opacity:0.95}
+
+    main{
+      max-width:980px;
+      margin:-40px auto 40px;
+      padding:18px;
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+
+    .hero{
+      display:flex;
+      gap:18px;
+      align-items:center;
+      padding:18px;
+      flex-wrap:wrap;
+    }
+    .hero .img{
+      flex:0 0 160px;
+      height:120px;
+      background-image: url('');
+      background-size:cover;
+      background-position:center;
+      border-radius:12px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.12);
+    }
+    .hero .info{
+      flex:1;
+      text-align:left;
+      min-width:220px;
+    }
+    .hero h2{margin:0 0 6px;font-size:20px}
+    .hero p{margin:0;color:var(--muted)}
+
+    .buttons{
+      display:flex;
+      gap:12px;
+      margin-top:12px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:10px;
+      text-decoration:none;
+      font-weight:600;
+      box-shadow:0 4px 12px rgba(0,0,0,0.06);
+      transition:transform .08s ease;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn--whatsapp{background:#25D366;color:white}
+    .btn--phone{background:#fff;color:var(--primary);border:1px solid #f0a07a}
+
+    /* Sección de menú rápido */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:12px;
+      margin-top:8px;
+    }
+    .menu-item{
+      padding:12px;
+      border-radius:10px;
+      background:linear-gradient(180deg,#fff,#fff6f3);
+      text-align:left;
+    }
+    .menu-item h3{margin:0 0 6px;font-size:16px}
+    .menu-item p{margin:0;color:var(--muted);font-size:14px}
+
+    footer{
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+      margin-top:22px;
+      padding:8px;
+    }
+
+    /* Formulario pequeño  */
+    form.contact{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      margin-top:8px;
+      flex-wrap:wrap;
+    }
+    input[type="text"], input[type="tel"]{
+      padding:10px;
+      border-radius:8px;
+      border:1px solid #eee;
+      flex:1 1 200px;
+      min-width:160px;
+    }
+    button[type="submit"]{
+      background:var(--accent);
+      border:none;
+      padding:10px 14px;
+      border-radius:8px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width:520px){
+      .hero{padding:12px}
+      header{padding:20px 12px}
+    }
+
+    /* Etiquetas pequeñas */
+    .badge{display:inline-block;background:#fff2ea;color:var(--primary);padding:6px 8px;border-radius:999px;font-size:13px;font-weight:700;border:1px solid #ffd0b2}
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Carnitas Don Chilo</h1>
+    <p>Los mejores tacos y paquetes de carnitas sabor zacazonapan — Pedidos por WhatsApp o teléfono</p>
+  </header>
+
+  <main>
+    <section class="card hero" aria-labelledby="slogan">
+      <div class="img" role="img" aria-label="Foto de carnitas"></div>
+
+      <div class="info">
+        <div class="badge">Abierto: 9:00 — 21:00</div>
+        <h2 id="slogan">¡Pide hoy y disfruta!</h2>
+        <p>Paquetes para casa, tacos por pieza y complementos. Entregas para recoger en el local o solicitar envío.</p>
+
+        <div class="buttons" role="group" aria-label="Contactos">
+          <!-- Reemplaza el número en wa.me con tu código de país + número sin signos. Ej: +52 55 1234 5678 -> 525512345678 -->
+          <a class="btn btn--whatsapp" id="whatsappLink" href="https://wa.me/525512345678?text=Hola%20Don%20Pepe%2C%20quiero%20hacer%20un%20pedido." target="_blank" rel="noopener noreferrer">
+             WhatsApp
+          </a>
+
+          <!-- Cambia el número en tel: -->
+          <a class="btn btn--phone" href="tel:5551234567">
+            📞 Llamar ahora
+          </a>
+        </div>
+
+        <!-- Formulario simple que redirige a WhatsApp con el mensaje (mejor para móviles) -->
+        <form class="contact" id="quickForm" onsubmit="sendQuick(event)" aria-label="Formulario rápido de pedido">
+          <input type="text" id="name" placeholder="Tu nombre" required />
+          <input type="text" id="pedido" placeholder="Ej: 2 kg de carnitas, 10 salsas" required />
+          <button type="submit">Enviar por WhatsApp</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="menu">
+      <h3 id="menu">Menú rápido</h3>
+      <div class="grid" role="list">
+        <div class="menu-item" role="listitem">
+          <h3>Paquete familiar (2 kg)</h3>
+          <p>$420 — Incluye tortillas, salsa y limón</p>
+        </div>
+        <div class="menu-item" role="listitem">
+          <h3>Medio kilo</h3>
+          <p>$120 — Perfecto para 2-3 personas</p>
+        </div>
+        <div class="menu-item" role="listitem">
+          <h3>Taco</h3>
+          <p>$22 — Con tu elección de salsa</p>
+        </div>
+        <div class="menu-item" role="listitem">
+          <h3>Complementos</h3>
+          <p>Salsas, cebolla, limón, tortillas extras</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="ubicacion">
+      <h3 id="ubicacion">Ubicación</h3>
+      <p style="margin:6px 0 0">Calle Principal #123, Col. Centro — Chimalhuacán, Estado</p>
+      <p style="margin:6px 0 0;color:var(--muted)">Horario: Lun-Dom 9:00 — 21:00</p>
+    </section>
+
+    <section class="card" aria-labelledby="info">
+      <h3 id="info">Métodos de pedido</h3>
+      <ul style="text-align:left;margin:8px 0 0;padding-left:18px;color:var(--muted)">
+        <li>WhatsApp: click en "WhatsApp — Pedir" para enviar un mensaje rápido.</li>
+        <li>Teléfono: presiona "Llamar ahora" para llamar directamente.</li>
+        <li>También puedes usar el formulario rápido arriba para enviar un pedido preformateado.</li>
+      </ul>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Carnitas Chilo — Hecho con cariño. <br />
+      <small>el mejor sazón.</small>
+    </footer>
+  </main>
+
+  <script>
+    // --- Ajustes que puedes cambiar fácilmente:
+    // Reemplaza estos valores por los de tu negocio:
+    const WHATSAPP_NUMBER = ""; // formato: código_país + número (ej: 52 55 ...)
+    const PHONE_DISPLAY = ""; // para mostrar si quieres usarlo en la página
+    const PHONE_TEL = ""; // para tel:
+
+    // Actualiza los enlaces al cargar:
+    document.addEventListener('DOMContentLoaded', () => {
+      // enlace WhatsApp principal (botón)
+      const waBtn = document.getElementById('whatsappLink');
+      if (waBtn) {
+        const text = encodeURIComponent("Hola, quiero hacer un pedido. Mi nombre es ____ y quiero: ");
+        waBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+      }
+
+      // teléfono tel:
+      const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+      phoneLinks.forEach(a => a.href = "tel:" + PHONE_TEL);
+
+      // año en pie de página
+      document.getElementById('year').textContent = new Date().getFullYear();
+    });
+
+    // Función del formulario que abre WhatsApp con mensaje prellenado
+    function sendQuick(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const pedido = document.getElementById('pedido').value.trim();
+      if(!name || !pedido) return alert('Por favor completa nombre y pedido.');
+      const mensaje = `Hola, soy ${name}. Quiero: ${pedido}. ¿Me confirman precio y hora para recoger/entrega?`;
+      const url = `https://wa.me/${encodeURIComponent( (document.getElementById('whatsappLink')?.href || '')).replace(/^.*wa.me\\//'') }?text=${encodeURIComponent(mensaje)}`;
+      // Si la construcción anterior falla por alguna razón, usa el número global:
+      const waNumber = (function(){
+        // intenta extraer número del href del botón
+        const btn = document.getElementById('whatsappLink');
+        if(btn && btn.href){
+          const match = btn.href.match(/wa.me\/([0-9]+)/);
+          if(match) return match[1];
+        }
+        return '';//numero agregar
+      })();
+
+      window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(mensaje)}`, '_blank');
+    }
+  </script>
+</body>
+</html>
