@@ -3,420 +3,250 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mi primera Calculadora </title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet" />
+  <title>Mi primera Calculadora</title>
+
   <style>
-    :root{
-      --bg:#0b0f1a;
-      --panel:#0f1424;
-      --glass: rgba(255,255,255,.08);
-      --txt:#e6ebff;
-      --accent:#7c9bff;
-      --accent-2:#00ffd1;
-      --danger:#ff6b6b;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
     body{
-      margin:0; font-family: 'Outfit', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial;
-      color:var(--txt); background: radial-gradient(1000px 600px at 10% 10%, #101a33 0%, #0b0f1a 45%, #070a12 100%);
-      display:grid; place-items:center; padding:24px;
-    }
-    .wrap{width:min(980px, 95vw);}
-
-    .title{
-      text-align:center; margin:0 0 16px; letter-spacing:.4px; font-weight:800;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      -webkit-background-clip: text; background-clip:text; color:transparent;
-      font-size: clamp(22px, 3vw, 30px);
+      margin:0;
+      font-family: Arial, sans-serif;
+      background:#0b0f1a;
+      color:#fff;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
     }
 
-    .card{
-      position:relative;
-      border-radius:28px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      box-shadow: 0 20px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.06);
+    .calculadora{
+      background:#13296e;
+      padding:20px;
+      border-radius:20px;
+      width:320px;
     }
 
-    .display{
-      position:absolute; inset:18px 18px auto 18px; height:96px;
-      border-radius:18px; background:var(--glass);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.08), inset 0 -12px 30px rgba(0,0,0,.25);
-      padding:12px 16px; display:flex; flex-direction:column; justify-content:center; align-items:flex-end;
+    .pantalla{
+      background:#000;
+      padding:15px;
+      border-radius:10px;
+      text-align:right;
+      font-size:28px;
+      margin-bottom:15px;
     }
-    .display small{opacity:.6; font-weight:400; font-size:14px; letter-spacing:.5px}
-    .display .value{font-weight:800; font-size: clamp(26px, 5vw, 44px); line-height:1;}
 
-    .kbd-hint{position:absolute; right:22px; top:24px; font-size:12px; opacity:.6}
+    .historial{
+      font-size:14px;
+      opacity:0.6;
+    }
 
-    svg{width:100%; height:auto; display:block}
+    .botones{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:10px;
+    }
 
-    /* focus ring for keyboard nav */
-    .key:focus{outline:none}
-    .key:focus-visible rect{stroke:var(--accent-2); stroke-width:3}
+    button{
+      padding:18px;
+      font-size:18px;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+    }
 
-    /* toast */
-    .toast{position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(20px);
-      background:rgba(0,0,0,.6); padding:10px 14px; border-radius:10px; opacity:0; transition:.35s; font-size:13px}
-    .toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+    .operador{background:#5c7aff; color:#000;}
+    .accion{background:#ff6b6b; color:#000;}
+    .igual{background:#00ffd1; color:#000;}
 
-    footer{margin-top:10px; text-align:center; opacity:.6; font-size:12.5px}
-    footer a{color:var(--accent)}
+    .mensaje{
+      position:fixed;
+      bottom:20px;
+      left:50%;
+      transform:translateX(-50%);
+      background:rgba(0,0,0,.7);
+      padding:10px 15px;
+      border-radius:10px;
+      opacity:0;
+      transition:.3s;
+    }
+
+    .mensaje.mostrar{
+      opacity:1;
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1 class="title">Mi primera Calculadora</h1>
 
-    <div class="card" role="application" aria-label="Calculadora">
-      <div class="display" aria-live="polite" aria-atomic="true">
-        <small id="history">&nbsp;</small>
-        <div class="value" id="result">0</div>
-      </div>
-      <div class="kbd-hint">Soporta teclado: 0-9 • +−×÷ • Enter • Backspace</div>
+<div class="calculadora">
 
-      <!-- UI principal dibujada en SVG -->
-      <svg viewBox="0 0 820 980" xmlns="http://www.w3.org/2000/svg" aria-hidden="false">
-        <defs>
-          <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#1d2c5b" />
-            <stop offset="100%" stop-color="#0f1424" />
-          </linearGradient>
-          <linearGradient id="btnGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#2b375e" />
-            <stop offset="100%" stop-color="#17203a" />
-          </linearGradient>
-          <linearGradient id="opGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#5c7aff" />
-            <stop offset="100%" stop-color="#00ffd1" />
-          </linearGradient>
-          <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="20" />
-          </filter>
-          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="6" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-        </defs>
-
-        <!-- Panel de la calculadora -->
-        <g>
-          <rect x="10" y="10" width="800" height="960" rx="42" fill="url(#bgGrad)" stroke="rgba(255,255,255,.08)"/>
-          <circle cx="120" cy="120" r="80" fill="#7c9bff" opacity="0.22" filter="url(#soft)"/>
-          <circle cx="760" cy="300" r="120" fill="#00ffd1" opacity="0.18" filter="url(#soft)"/>
-        </g>
-
-        <!-- Rejilla de botones -->
-        <!-- 5 filas x 4 columnas; cada <g> es un botón con <rect> y <text> -->
-        <g id="keys" transform="translate(60, 220)">
-          <!-- Utilidad para crear un botón: data-value, data-type -->
-          <!-- Fila 1 -->
-          <g class="key" tabindex="0" data-value="C" data-type="action" transform="translate(0,0)">
-            <rect width="160" height="120" rx="20" fill="url(#btnGrad)"/>
-            <text x="80" y="72" text-anchor="middle" font-size="48" fill="#ffb3b3" font-weight="700">C</text>
-          </g>
-          <g class="key" tabindex="0" data-value="±" data-type="action" transform="translate(180,0)">
-            <rect width="160" height="120" rx="20" fill="url(#btnGrad)"/>
-            <text x="80" y="72" text-anchor="middle" font-size="44" fill="#e6ebff" font-weight="700">±</text>
-          </g>
-          <g class="key" tabindex="0" data-value="%" data-type="op" transform="translate(360,0)">
-            <rect width="160" height="120" rx="20" fill="url(#btnGrad)"/>
-            <text x="80" y="72" text-anchor="middle" font-size="44" fill="#e6ebff" font-weight="700">%</text>
-          </g>
-          <g class="key" tabindex="0" data-value="/" data-type="op" transform="translate(540,0)">
-            <rect width="160" height="120" rx="20" fill="url(#btnGrad)"/>
-            <text x="80" y="72" text-anchor="middle" font-size="44" fill="#9fd8ff" font-weight="800">÷</text>
-          </g>
-
-          <!-- Fila 2 -->
-          <g class="key" tabindex="0" data-value="7" data-type="num" transform="translate(0,140)">
-            <rect width="160" height="120" rx="20" fill="url(#btnGrad)"/>
-            <text x="80" y="72" text-anchor="middle" font-size="48" fill="#e6ebff" font-weight="700">7</text>
-          </g>
-          <g class="key" tabindex="0" data-value="8" data-type="num" transform="translate(180,140)">
-            <rect width="160" height="120" rx="20" fill="url(#btnGrad)"/>
-            <text x="80" y="72" text-anchor="middle" font-size="48" fill="#e6ebff" font-weight="700">8</text>
-          </g>
-          <g class="key" tabindex="0" data-value="9" data-type="num" transform="translate(360,140)">
-            <rect width="160" height="120" rx="20" fill="url(#btnGrad)"/>
-            <text x="80" y="72" text-anchor="middle" font-size="48" fill="#e6ebff" font-weight="700">9</text>
-          </g>
-          <g class="key" tabindex="0" data-value="*" data-type="op" transform="translate(540,140)">
-            <rect width="160" height="120" rx="20" fill="url(#btnGrad)"/>
-            <text x="80" y="72" text-anchor="middle" font-size="44" fill="#9fd8ff" font-weight="800">×</text>
-          </g>
-
-          <!-- Fila 3 -->
-          <g class="key" tabindex="0" data-value="4" data-type="num" transform="translate(0,280)">
-            <rect width="160" height="120" rx="20" fill="url(#btnGrad)"/>
-            <text x="80" y="72" text-anchor="middle" font-size="48" fill="#e6ebff" font-weight="700">4</text>
-          </g>
-          <g class="key" tabindex="0" data-value="5" data-type="num" transform="translate(180,280)">
-            <rect width="160" height="120" rx="20" fill="url(#btnGrad)"/>
-            <text x="80" y="72" text-anchor="middle" font-size="48" fill="#e6ebff" font-weight="700">5</text>
-          </g>
-          <g class="key" tabindex="0" data-value="6" data-type="num" transform="translate(360,280)">
-            <rect width="160" height="120" rx="20" fill="url(#btnGrad)"/>
-            <text x="80" y="72" text-anchor="middle" font-size="48" fill="#e6ebff" font-weight="700">6</text>
-          </g>
-          <g class="key" tabindex="0" data-value="-" data-type="op" transform="translate(540,280)">
-            <rect width="160" height="120" rx="20" fill="url(#btnGrad)"/>
-            <text x="80" y="72" text-anchor="middle" font-size="44" fill="#9fd8ff" font-weight="800">−</text>
-          </g>
-
-          <!-- Fila 4 -->
-          <g class="key" tabindex="0" data-value="1" data-type="num" transform="translate(0,420)">
-            <rect width="160" height="120" rx="20" fill="url(#btnGrad)"/>
-            <text x="80" y="72" text-anchor="middle" font-size="48" fill="#e6ebff" font-weight="700">1</text>
-          </g>
-          <g class="key" tabindex="0" data-value="2" data-type="num" transform="translate(180,420)">
-            <rect width="160" height="120" rx="20" fill="url(#btnGrad)"/>
-            <text x="80" y="72" text-anchor="middle" font-size="48" fill="#e6ebff" font-weight="700">2</text>
-          </g>
-          <g class="key" tabindex="0" data-value="3" data-type="num" transform="translate(360,420)">
-            <rect width="160" height="120" rx="20" fill="url(#btnGrad)"/>
-            <text x="80" y="72" text-anchor="middle" font-size="48" fill="#e6ebff" font-weight="700">3</text>
-          </g>
-          <g class="key" tabindex="0" data-value="+" data-type="op" transform="translate(540,420)">
-            <rect width="160" height="120" rx="20" fill="url(#btnGrad)"/>
-            <text x="80" y="72" text-anchor="middle" font-size="44" fill="#9fd8ff" font-weight="800">+</text>
-          </g>
-
-          <!-- Fila 5 -->
-          <g class="key" tabindex="0" data-value="0" data-type="num" transform="translate(0,560)">
-            <rect width="340" height="120" rx="20" fill="url(#btnGrad)"/>
-            <text x="170" y="72" text-anchor="middle" font-size="48" fill="#e6ebff" font-weight="700">0</text>
-          </g>
-          <g class="key" tabindex="0" data-value="." data-type="num" transform="translate(360,560)">
-            <rect width="160" height="120" rx="20" fill="url(#btnGrad)"/>
-            <text x="80" y="72" text-anchor="middle" font-size="48" fill="#e6ebff" font-weight="700">·</text>
-          </g>
-          <g class="key key-op" tabindex="0" data-value="=" data-type="equals" transform="translate(540,560)">
-            <rect width="160" height="120" rx="20" fill="url(#opGrad)"/>
-            <text x="80" y="72" text-anchor="middle" font-size="44" fill="#0b0f1a" font-weight="900">=</text>
-          </g>
-
-          <!-- Fila extra: borrar -->
-          <g class="key" tabindex="0" data-value="back" data-type="action" transform="translate(0,700)">
-            <rect width="520" height="120" rx="20" fill="url(#btnGrad)"/>
-            <text x="260" y="72" text-anchor="middle" font-size="40" fill="#e6ebff" font-weight="700">⌫ Retroceso</text>
-          </g>
-          <g class="key key-op" tabindex="0" data-value="copy" data-type="action" transform="translate(540,700)">
-            <rect width="160" height="120" rx="20" fill="url(#opGrad)"/>
-            <text x="80" y="72" text-anchor="middle" font-size="32" fill="#0b0f1a" font-weight="800">Copiar</text>
-          </g>
-        </g>
-      </svg>
-    </div>
-
-    <footer>
-        
-    </footer>
+  <div class="pantalla">
+    <div class="historial" id="historial">&nbsp;</div>
+    <div id="resultado">0</div>
   </div>
 
-  <div class="toast" id="toast" role="status" aria-live="polite">Copiado al portapapeles</div>
+  <div class="botones">
+    <button class="accion" data-valor="C">C</button>
+    <button class="accion" data-valor="±">±</button>
+    <button class="operador" data-valor="%">%</button>
+    <button class="operador" data-valor="/">÷</button>
 
-  <script>
-    // ==========================
-    // Lógica de la calculadora
-    // ==========================
-    const historyEl = document.getElementById('history');
-    const resultEl = document.getElementById('result');
-    const toastEl = document.getElementById('toast');
-    const keys = Array.from(document.querySelectorAll('.key'));
+    <button data-valor="7">7</button>
+    <button data-valor="8">8</button>
+    <button data-valor="9">9</button>
+    <button class="operador" data-valor="*">×</button>
 
-    let a = null;           // acumulador
-    let op = null;          // operación pendiente
-    let entering = true;    // si estamos escribiendo el número actual
-    let justEvaluated = false;
+    <button data-valor="4">4</button>
+    <button data-valor="5">5</button>
+    <button data-valor="6">6</button>
+    <button class="operador" data-valor="-">−</button>
 
-    function showToast(msg){
-      toastEl.textContent = msg;
-      toastEl.classList.add('show');
-      setTimeout(()=> toastEl.classList.remove('show'), 1100);
+    <button data-valor="1">1</button>
+    <button data-valor="2">2</button>
+    <button data-valor="3">3</button>
+    <button class="operador" data-valor="+">+</button>
+
+    <button data-valor="0">0</button>
+    <button data-valor=".">.</button>
+    <button class="igual" data-valor="=">=</button>
+    <button class="accion" data-valor="copiar">📋</button>
+  </div>
+</div>
+
+<div class="mensaje" id="mensajeFlotante">Copiado</div>
+
+<script>
+  // ELEMENTOS
+  const pantallaResultado = document.getElementById('resultado');
+  const historialOperacion = document.getElementById('historial');
+  const mensajeFlotante = document.getElementById('mensajeFlotante');
+  const botones = document.querySelectorAll('button');
+
+  // VARIABLES DE ESTADO
+  let acumulador = null;        // primer número
+  let operacion = null;         // operación seleccionada
+  let escribiendo = true;       // si se está escribiendo un número
+  let recienCalculado = false;  // si acaba de presionar =
+
+  // FUNCIONES
+  function mostrarMensaje(texto){
+    mensajeFlotante.textContent = texto;
+    mensajeFlotante.classList.add('mostrar');
+    setTimeout(() => {
+      mensajeFlotante.classList.remove('mostrar');
+    }, 1000);
+  }
+
+  function obtenerNumero(){
+    return parseFloat(pantallaResultado.textContent);
+  }
+
+  function actualizarPantalla(valor){
+    pantallaResultado.textContent = valor;
+  }
+
+  function limpiarTodo(){
+    acumulador = null;
+    operacion = null;
+    escribiendo = true;
+    recienCalculado = false;
+    historialOperacion.textContent = '';
+    actualizarPantalla(0);
+  }
+
+  function escribirNumero(numero){
+    if(recienCalculado){
+      actualizarPantalla(numero);
+      recienCalculado = false;
+      return;
     }
 
-    function format(n){
-      if(typeof n !== 'number' || !isFinite(n)) return 'Error';
-      const s = n.toString();
-      if(Math.abs(n) >= 1e10 || (Math.abs(n) > 0 && Math.abs(n) < 1e-6)){
-        return n.toExponential(6).replace(/\+?0+(?=e)/,'');
-      }
-      // limitar a 12 cifras visibles (sin contar separadores)
-      let out = n.toLocaleString('es-MX', {maximumFractionDigits: 10});
-      if(out.length > 16){
-        out = n.toPrecision(12).toString();
-      }
-      return out;
-    }
-
-    function getCurrent(){
-      const raw = resultEl.dataset.raw || '0';
-      return parseFloat(raw);
-    }
-    function setDisplay(value){
-      const raw = (typeof value === 'number') ? value : parseFloat(value || 0);
-      resultEl.dataset.raw = isNaN(raw) ? '0' : String(raw);
-      resultEl.textContent = isNaN(raw) ? 'Error' : format(raw);
-    }
-
-    function clearAll(){
-      a = null; op = null; entering = true; justEvaluated = false;
-      historyEl.textContent = '\u00A0';
-      setDisplay(0);
-    }
-
-    function inputDigit(d){
-      const raw = resultEl.dataset.raw || '0';
-      if(justEvaluated){ historyEl.textContent = '\u00A0'; justEvaluated = false; }
-      if(entering){
-        if(d === '.' && raw.includes('.')) return;
-        const next = (raw === '0' && d !== '.') ? d : raw + d;
-        resultEl.dataset.raw = next;
-        resultEl.textContent = next;
+    if(escribiendo){
+      if(pantallaResultado.textContent === '0'){
+        actualizarPantalla(numero);
       } else {
-        // empezamos un nuevo número
-        entering = true; resultEl.dataset.raw = (d === '.') ? '0.' : d;
-        resultEl.textContent = resultEl.dataset.raw;
+        actualizarPantalla(pantallaResultado.textContent + numero);
       }
+    } else {
+      actualizarPantalla(numero);
+      escribiendo = true;
+    }
+  }
+
+  function calcular(x, y, op){
+    if(op === '+') return x + y;
+    if(op === '-') return x - y;
+    if(op === '*') return x * y;
+    if(op === '/') return y === 0 ? 'Error' : x / y;
+    return y;
+  }
+
+  function seleccionarOperacion(op){
+    const actual = obtenerNumero();
+
+    if(acumulador === null){
+      acumulador = actual;
+    } else {
+      acumulador = calcular(acumulador, actual, operacion);
+      actualizarPantalla(acumulador);
     }
 
-    function toggleSign(){
-      if(!entering && a !== null){
-        a = -a; historyEl.textContent = `${format(a)} ${op || ''}`.trim();
-      } else {
-        const current = getCurrent();
-        setDisplay(-current);
+    operacion = op;
+    escribiendo = false;
+    historialOperacion.textContent = acumulador + ' ' + op;
+  }
+
+  function resultadoFinal(){
+    const actual = obtenerNumero();
+    const resultado = calcular(acumulador, actual, operacion);
+    actualizarPantalla(resultado);
+    historialOperacion.textContent = '';
+    acumulador = resultado;
+    operacion = null;
+    recienCalculado = true;
+  }
+
+  function cambiarSigno(){
+    actualizarPantalla(obtenerNumero() * -1);
+  }
+
+  function porcentaje(){
+    actualizarPantalla(obtenerNumero() / 100);
+  }
+
+  function copiarResultado(){
+    navigator.clipboard.writeText(pantallaResultado.textContent);
+    mostrarMensaje('Copiado al portapapeles');
+  }
+
+  // EVENTOS
+  botones.forEach(boton => {
+    boton.addEventListener('click', () => {
+      const valor = boton.dataset.valor;
+
+      if(!isNaN(valor) || valor === '.'){
+        escribirNumero(valor);
       }
-    }
-
-    function percent(){
-      const current = getCurrent();
-      if(a !== null && op){
-        // porcentaje relativo a 'a' (como muchas calculadoras)
-        const p = a * (current/100);
-        setDisplay(p);
-      } else {
-        setDisplay(current/100);
+      else if(valor === 'C'){
+        limpiarTodo();
       }
-    }
-
-    function applyOp(nextOp){
-      const current = getCurrent();
-      if(a === null){
-        a = current;
-      } else if(op && entering){
-        a = compute(a, current, op);
-        setDisplay(a);
+      else if(valor === '±'){
+        cambiarSigno();
       }
-      op = nextOp;
-      entering = false;
-      historyEl.textContent = `${format(a)} ${symbolFor(op)}`;
-    }
-
-    function symbolFor(o){
-      return {"/":"÷","*":"×","-":"−","+":"+"}[o] || o;
-    }
-
-    function compute(x, y, o){
-      switch(o){
-        case '+': return x + y;
-        case '-': return x - y;
-        case '*': return x * y;
-        case '/': return y === 0 ? NaN : x / y;
-        default: return y;
+      else if(valor === '%'){
+        porcentaje();
       }
-    }
-
-    function equals(){
-      const current = getCurrent();
-      if(op === null){
-        // nada que calcular
-        historyEl.textContent = `${format(current)} =`;
-        setDisplay(current);
-        justEvaluated = true; return;
+      else if(valor === '='){
+        resultadoFinal();
       }
-      const result = compute(a, current, op);
-      historyEl.textContent = `${format(a)} ${symbolFor(op)} ${format(current)} =`;
-      setDisplay(result);
-      a = result; op = null; entering = false; justEvaluated = true;
-    }
-
-    function backspace(){
-      if(!entering) return; // no borrar si estamos entre operaciones
-      let raw = resultEl.dataset.raw || '0';
-      if(justEvaluated) return; // evita borrar el resultado final
-      raw = raw.length <= 1 ? '0' : raw.slice(0,-1);
-      resultEl.dataset.raw = raw; resultEl.textContent = raw;
-    }
-
-    function copyToClipboard(){
-      const t = resultEl.textContent.trim();
-      navigator.clipboard?.writeText(t).then(()=>{
-        showToast('Copiado al portapapeles');
-      }).catch(()=>{
-        showToast('No se pudo copiar');
-      });
-    }
-
-    function handleAction(value){
-      switch(value){
-        case 'C': clearAll(); break;
-        case '±': toggleSign(); break;
-        case '%': percent(); break;
-        case 'back': backspace(); break;
-        case 'copy': copyToClipboard(); break;
+      else if(valor === 'copiar'){
+        copiarResultado();
       }
-    }
-
-    // Eventos de los botones SVG
-    keys.forEach(k=>{
-      k.addEventListener('click', ()=> dispatchKey(k.dataset.value, k.dataset.type));
-      // Accesibilidad con teclado cuando el foco está en el botón
-      k.addEventListener('keydown', (e)=>{
-        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); dispatchKey(k.dataset.value, k.dataset.type); }
-      });
-      // efecto presionado
-      k.addEventListener('mousedown', ()=> k.querySelector('rect').setAttribute('filter','url(#glow)'));
-      k.addEventListener('mouseup', ()=> k.querySelector('rect').removeAttribute('filter'));
-      k.addEventListener('mouseleave', ()=> k.querySelector('rect').removeAttribute('filter'));
+      else{
+        seleccionarOperacion(valor);
+      }
     });
+  });
 
-    function dispatchKey(value, type){
-      if(type === 'num'){
-        inputDigit(value);
-      } else if(type === 'op'){
-        applyOp(value);
-      } else if(type === 'equals'){
-        equals();
-      } else if(type === 'action'){
-        handleAction(value);
-      }
-    }
+  limpiarTodo();
+</script>
 
-    // Soporte de teclado físico
-    window.addEventListener('keydown', (e)=>{
-      const key = e.key;
-      if(/[0-9]/.test(key)) return dispatchKey(key, 'num');
-      if(key === '.') return dispatchKey('.', 'num');
-      if(key === '+') return dispatchKey('+', 'op');
-      if(key === '-') return dispatchKey('-', 'op');
-      if(key === '*') return dispatchKey('*', 'op');
-      if(key === '/') return dispatchKey('/', 'op');
-      if(key === 'Enter' || key === '=') return dispatchKey('=', 'equals');
-      if(key === 'Backspace') return dispatchKey('back', 'action');
-      if(key.toLowerCase() === 'c' && (e.ctrlKey || e.metaKey)) return copyToClipboard();
-      // tecla P hace porcentaje, S cambia signo
-      if(key.toLowerCase() === 'p') return percent();
-      if(key.toLowerCase() === 's') return toggleSign();
-    });
-
-    // Estado inicial
-    clearAll();
-  </script>
 </body>
 </html>
