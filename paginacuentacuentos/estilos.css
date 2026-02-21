@@ -1,0 +1,119 @@
+/* -------------------------
+   CONFIGURACIÓN GENERAL
+-------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #000;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* Cada escena ocupa toda la pantalla */
+.escena {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* -------------------------
+   INTRO
+-------------------------- */
+.intro {
+  background: linear-gradient(#020617, #020617);
+  flex-direction: column;
+  text-align: center;
+}
+
+/* -------------------------
+   TILE MAPS
+-------------------------- */
+.bosque {
+  background:
+    url("tiles/cielo.png") repeat-x,
+    url("tiles/bosque.png") repeat,
+    url("tiles/tierra.png") repeat-x;
+  background-position:
+    0 0,
+    0 50%,
+    0 100%;
+}
+
+.camino {
+  background:
+    url("tiles/cielo.png") repeat-x,
+    url("tiles/tierra.png") repeat;
+}
+
+.noche {
+  background:
+    linear-gradient(#020617, #000),
+    url("tiles/tierra.png") repeat;
+}
+
+/* -------------------------
+   TEXTO DE HISTORIA
+-------------------------- */
+.historia {
+  background: rgba(0,0,0,0.6);
+  padding: 30px;
+  border-radius: 14px;
+  max-width: 420px;
+  text-align: center;
+  animation: aparecer 1s ease forwards;
+}
+
+/* -------------------------
+   PERSONAJE
+-------------------------- */
+.personaje {
+  position: absolute;
+  bottom: 60px;
+  width: 60px;
+  height: 80px;
+  background: #facc15;
+  border-radius: 10px;
+  animation: caminar 1.5s infinite alternate;
+}
+
+/* -------------------------
+   ANIMACIONES
+-------------------------- */
+@keyframes caminar {
+  from { transform: translateX(-10px); }
+  to { transform: translateX(10px); }
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* -------------------------
+   FOOTER
+-------------------------- */
+footer {
+  text-align: center;
+  padding: 40px;
+  background: #020617;
+}
+
+/* RESPONSIVO */
+@media (max-width: 600px) {
+  .historia {
+    margin: 20px;
+  }
+}
