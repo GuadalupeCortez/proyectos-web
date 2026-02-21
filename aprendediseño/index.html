@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio de Estilos</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<main class="contenedor">
+
+    <!-- Panel de controles -->
+    <section class="panel">
+        <h1>🎨 Laboratorio de estilos</h1>
+        <p>Modifica el botón en tiempo real</p>
+
+        <div class="control">
+            <label>Tamaño del botón</label>
+            <input type="range" id="tamanoBoton" min="120" max="300" value="180">
+        </div>
+
+        <div class="control">
+            <label>Tamaño del texto</label>
+            <input type="range" id="tamanoTexto" min="14" max="40" value="18">
+        </div>
+
+        <div class="control">
+            <label>Color del botón</label>
+            <input type="color" id="colorBoton" value="#00f2fe">
+        </div>
+
+        <div class="control">
+            <label>Brillo</label>
+            <input type="range" id="brillo" min="50" max="150" value="100">
+        </div>
+
+        <div class="control">
+            <label>Opacidad</label>
+            <input type="range" id="opacidad" min="10" max="100" value="100">
+        </div>
+
+        <div class="control">
+            <label>Bordes redondeados</label>
+            <input type="range" id="bordes" min="0" max="60" value="20">
+        </div>
+
+        <div class="control">
+            <label>Sombra</label>
+            <input type="range" id="sombra" min="0" max="40" value="20">
+        </div>
+    </section>
+
+    <!-- Área de vista previa -->
+    <section class="preview">
+        <button id="botonDemo">Botón interactivo</button>
+    </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
