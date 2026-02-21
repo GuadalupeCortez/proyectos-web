@@ -3,41 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor Dashboard</title>
+    <title>Gestor Productos PRO</title>
     <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
 
 <header class="header">
-    <h1>📦 Productos</h1>
+    <h1>📦 Gestor de productos</h1>
+    <button id="exportar">📤 Exportar Excel</button>
 </header>
 
 <main class="layout">
 
-    <!-- Panel lateral -->
+    <!-- Panel -->
     <aside class="sidebar">
         <h2>➕ Nuevo producto</h2>
 
-        <input id="producto" placeholder="Nombre">
+        <input id="producto" placeholder="Nombre del producto">
         <input id="precio" type="number" placeholder="Precio">
         <input id="cantidad" type="number" placeholder="Cantidad">
 
         <button id="agregar">Agregar</button>
     </aside>
 
-    <!-- Tabla -->
+    <!-- Contenido -->
     <section class="contenido">
+
+        <!-- Buscador -->
+        <input id="buscador" placeholder="🔍 Buscar producto">
+
+        <!-- Tabla -->
         <table>
             <thead>
                 <tr>
                     <th>Producto</th>
                     <th>Precio</th>
                     <th>Cantidad</th>
+                    <th>Total</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody id="tabla"></tbody>
         </table>
+
+        <!-- Totales -->
+        <div class="totales">
+            <p>Total productos: <strong id="totalProductos">0</strong></p>
+            <p>Valor inventario: <strong>$<span id="valorInventario">0</span></strong></p>
+        </div>
+
     </section>
 
 </main>
