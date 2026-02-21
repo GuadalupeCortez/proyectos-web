@@ -1,0 +1,84 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #232526, #414345);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Contenedor general */
+.contenedor {
+    width: 100%;
+    max-width: 900px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* Panel de controles */
+.panel {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 25px;
+    color: #fff;
+    box-shadow: 0 0 30px rgba(255,255,255,0.25);
+}
+
+.panel h1 {
+    margin-bottom: 10px;
+}
+
+.panel p {
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.control {
+    margin-bottom: 15px;
+}
+
+.control label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+/* Preview */
+.preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 30px rgba(255,255,255,0.25);
+}
+
+/* Botón editable */
+#botonDemo {
+    width: 180px;
+    padding: 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 20px;
+    background: #00f2fe;
+    color: #000;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .contenedor {
+        grid-template-columns: 1fr;
+    }
+}
