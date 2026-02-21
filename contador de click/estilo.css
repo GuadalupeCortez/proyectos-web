@@ -1,0 +1,105 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Fondo general */
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1d2671, #c33764);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Contenedor */
+.contenedor {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Tarjeta estilo glassmorphism */
+.tarjeta {
+    max-width: 400px;
+    width: 100%;
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+    text-align: center;
+    color: #fff;
+}
+
+/* Título */
+.tarjeta h1 {
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+}
+
+/* Texto */
+.tarjeta p {
+    margin-bottom: 25px;
+    opacity: 0.9;
+}
+
+/* Contador */
+.contador {
+    font-size: 4rem;
+    margin-bottom: 25px;
+    font-weight: bold;
+    text-shadow: 0 0 15px rgba(255,255,255,0.6);
+}
+
+/* Botones */
+.botones {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* Estilo botones */
+button {
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+/* Botón principal */
+#botonClick {
+    background: #00f2fe;
+    color: #000;
+    box-shadow: 0 0 15px rgba(0,242,254,0.8);
+}
+
+#botonClick:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(0,242,254,1);
+}
+
+/* Botón reset */
+#botonReset {
+    background: #ff4e50;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(255,78,80,0.8);
+}
+
+#botonReset:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255,78,80,1);
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+    .contador {
+        font-size: 3rem;
+    }
+}
