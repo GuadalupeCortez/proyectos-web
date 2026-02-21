@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventanas Responsivas</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<main class="contenedor">
+
+    <!-- Panel de controles -->
+    <aside class="panel">
+        <h2>⚙️ Controles de diseño</h2>
+
+        <label>
+            Bordes redondeados
+            <input type="range" id="bordes" min="0" max="40" value="20">
+        </label>
+
+        <label>
+            Tamaño de sombra
+            <input type="range" id="sombra" min="0" max="40" value="20">
+        </label>
+
+        <label>
+            Color de ventana
+            <input type="color" id="colorVentana" value="#ffffff">
+        </label>
+    </aside>
+
+    <!-- Área de ventanas -->
+    <section class="ventanas">
+
+        <!-- Ventana -->
+        <article class="ventana">
+            <h3>Ventana 1</h3>
+            <p>Contenido fijo y responsivo.</p>
+        </article>
+
+        <article class="ventana">
+            <h3>Ventana 2</h3>
+            <p>No se mueve al cambiar tamaño.</p>
+        </article>
+
+        <article class="ventana">
+            <h3>Ventana 3</h3>
+            <p>Diseño estable con CSS Grid.</p>
+        </article>
+
+        <article class="ventana">
+            <h3>Ventana 4</h3>
+            <p>Ideal para dashboards.</p>
+        </article>
+
+    </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
