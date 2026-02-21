@@ -5,9 +5,7 @@
     font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 
-/* Fondo */
 body {
-    min-height: 100vh;
     background: #f4f6f8;
     color: #222;
 }
@@ -17,6 +15,17 @@ body {
     padding: 20px;
     background: #1f2933;
     color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header button {
+    background: #22c55e;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
 }
 
 /* Layout */
@@ -28,44 +37,40 @@ body {
 
 /* Sidebar */
 .sidebar {
-    background: #ffffff;
+    background: #fff;
     padding: 20px;
     border-right: 1px solid #ddd;
 }
 
-.sidebar h2 {
-    margin-bottom: 15px;
-}
-
-.sidebar input {
+.sidebar input, .sidebar button {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
 }
 
 .sidebar button {
-    width: 100%;
-    padding: 12px;
     background: #3b82f6;
     color: #fff;
     border: none;
     cursor: pointer;
 }
 
-/* Tabla */
+/* Contenido */
 .contenido {
     padding: 20px;
-    overflow-x: auto;
 }
 
+#buscador {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+/* Tabla */
 table {
     width: 100%;
     border-collapse: collapse;
     background: #fff;
-}
-
-thead {
-    background: #e5e7eb;
 }
 
 th, td {
@@ -74,11 +79,10 @@ th, td {
     text-align: center;
 }
 
-tbody tr:hover {
-    background: #f9fafb;
+thead {
+    background: #e5e7eb;
 }
 
-/* Botón eliminar */
 .eliminar {
     background: #ef4444;
     color: #fff;
@@ -87,14 +91,17 @@ tbody tr:hover {
     cursor: pointer;
 }
 
+/* Totales */
+.totales {
+    margin-top: 15px;
+    display: flex;
+    gap: 30px;
+    font-size: 1.1rem;
+}
+
 /* Responsivo */
 @media (max-width: 768px) {
     .layout {
         grid-template-columns: 1fr;
-    }
-
-    .sidebar {
-        border-right: none;
-        border-bottom: 1px solid #ddd;
     }
 }
