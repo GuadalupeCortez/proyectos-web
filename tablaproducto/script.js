@@ -1,82 +1,70 @@
-// Obtener elementos
-const nombreProducto = document.getElementById("nombreProducto");
-const precioProducto = document.getElementById("precioProducto");
-const cantidadProducto = document.getElementById("cantidadProducto");
-const botonAgregar = document.getElementById("botonAgregar");
-const tablaProductos = document.getElementById("tablaProductos");
+// Elementos
+const producto = document.getElementById("producto");
+const precio = document.getElementById("precio");
+const cantidad = document.getElementById("cantidad");
+const agregar = document.getElementById("agregar");
+const tabla = document.getElementById("tabla");
 
-// Cargar productos guardados
-let productos = JSON.parse(localStorage.getItem("productos")) || [];
+// Cargar datos
+let datos = JSON.parse(localStorage.getItem("tablaGlass")) || [];
+renderizar();
 
-// Mostrar productos al cargar
-mostrarProductos();
+// Agregar producto
+agregar.addEventListener("click", () => {
+    if (!producto.value || !precio.value || !cantidad.value) return;
 
-// Evento agregar
-botonAgregar.addEventListener("click", () => {
-    if (nombreProducto.value === "" || precioProducto.value === "" || cantidadProducto.value === "") {
-        alert("Completa todos los campos");
-        return;
-    }
+    datos.push({
+        producto: producto.value,
+        precio: precio.value,
+        cantidad: cantidad.value
+    });
 
-    const producto = {
-        nombre: nombreProducto.value,
-        precio: precioProducto.value,
-        cantidad: cantidadProducto.value
-    };
-
-    productos.push(producto);
-    guardarProductos();
-    mostrarProductos();
-    limpiarFormulario();
+    guardar();
+    renderizar();
+    limpiar();
 });
 
-// Mostrar productos en la tabla
-function mostrarProductos() {
-    tablaProductos.innerHTML = "";
+// Renderizar tabla
+function renderizar() {
+    tabla.innerHTML = "";
 
-    productos.forEach((producto, indice) => {
+    datos.forEach((item, index) => {
         const fila = document.createElement("tr");
 
         fila.innerHTML = `
-            <td contenteditable="true">${producto.nombre}</td>
-            <td contenteditable="true">${producto.precio}</td>
-            <td contenteditable="true">${producto.cantidad}</td>
-            <td>
-                <button class="botonEliminar" onclick="eliminarProducto(${indice})">
-                    Eliminar
-                </button>
-            </td>
+            <td contenteditable="true">${item.producto}</td>
+            <td contenteditable="true">${item.precio}</td>
+            <td contenteditable="true">${item.cantidad}</td>
+            <td><button class="eliminar">✖</button></td>
         `;
 
-        // Guardar cambios al editar
-        fila.querySelectorAll("td[contenteditable]").forEach((celda, posicion) => {
-            celda.addEventListener("input", () => {
-                if (posicion === 0) producto.nombre = celda.textContent;
-                if (posicion === 1) producto.precio = celda.textContent;
-                if (posicion === 2) producto.cantidad = celda.textContent;
-                guardarProductos();
-            });
+        fila.querySelector(".eliminar").onclick = () => {
+            datos.splice(index, 1);
+            guardar();
+            renderizar();
+        };
+
+        fila.querySelectorAll("[contenteditable]").forEach((celda, i) => {
+            celda.oninput = () => {
+                if (i === 0) item.producto = celda.textContent;
+                if (i === 1) item.precio = celda.textContent;
+                if (i === 2) item.cantidad = celda.textContent;
+                guardar();
+            };
         });
 
-        tablaProductos.appendChild(fila);
+        tabla.appendChild(fila);
     });
 }
 
-// Eliminar producto
-function eliminarProducto(indice) {
-    productos.splice(indice, 1);
-    guardarProductos();
-    mostrarProductos();
-}
-
-// Guardar en localStorage
-function guardarProductos() {
-    localStorage.setItem("productos", JSON.stringify(productos));
+// Guardar datos
+function guardar() {
+    localStorage.setItem("tablaGlass", JSON.stringify(datos));
 }
 
 // Limpiar inputs
-function limpiarFormulario() {
-    nombreProducto.value = "";
-    precioProducto.value = "";
-    cantidadProducto.value = "";
+function limpiar() {
+    producto.value = "";
+    precio.value = "";
+    cantidad.value = "";
 }
