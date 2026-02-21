@@ -5,9 +5,10 @@
     font-family: 'Segoe UI', sans-serif;
 }
 
+/* Fondo moderno */
 body {
     min-height: 100vh;
-    background: linear-gradient(135deg, #141e30, #243b55);
+    background: linear-gradient(135deg, #667eea, #764ba2);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,49 +16,60 @@ body {
     color: #fff;
 }
 
+/* Contenedor */
 .contenedor {
     width: 100%;
     max-width: 900px;
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(12px);
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 0 0 40px rgba(255,255,255,0.3);
 }
 
-h1 {
+/* Tarjeta glass */
+.glass {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(15px);
+    border-radius: 25px;
+    padding: 30px;
+    box-shadow: 0 0 50px rgba(255,255,255,0.3);
+}
+
+/* Títulos */
+.glass h1 {
     margin-bottom: 5px;
 }
 
-p {
+.glass p {
     margin-bottom: 20px;
     opacity: 0.9;
 }
 
-/* Formulario */
-.formulario {
+/* Barra de inputs */
+.barra {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr auto;
     gap: 10px;
     margin-bottom: 20px;
 }
 
-.formulario input {
-    padding: 10px;
-    border-radius: 10px;
+.barra input {
+    padding: 12px;
+    border-radius: 12px;
     border: none;
+    outline: none;
 }
 
-.formulario button {
-    padding: 10px 15px;
-    border-radius: 10px;
+/* Botón glow */
+.barra button {
     border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
     cursor: pointer;
     background: #00f2fe;
+    box-shadow: 0 0 20px #00f2fe;
+    font-size: 1.2rem;
 }
 
 /* Tabla */
-.tabla-contenedor {
+.tabla-wrapper {
     overflow-x: auto;
 }
 
@@ -66,24 +78,24 @@ table {
     border-collapse: collapse;
 }
 
-th, td {
-    padding: 12px;
-    text-align: center;
-}
-
 thead {
     background: rgba(255,255,255,0.2);
+}
+
+th, td {
+    padding: 14px;
+    text-align: center;
 }
 
 tbody tr {
     background: rgba(255,255,255,0.1);
 }
 
-/* Botones tabla */
-.botonEliminar {
+/* Botón eliminar */
+.eliminar {
     background: #ff4e50;
-    color: #fff;
     border: none;
+    color: #fff;
     padding: 6px 10px;
     border-radius: 8px;
     cursor: pointer;
@@ -91,7 +103,7 @@ tbody tr {
 
 /* Responsivo */
 @media (max-width: 700px) {
-    .formulario {
+    .barra {
         grid-template-columns: 1fr;
     }
 }
