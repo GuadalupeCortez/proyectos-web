@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Productos</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<main class="contenedor">
+
+    <h1>📦 Gestión de productos</h1>
+    <p>Agrega, edita, elimina y guarda productos</p>
+
+    <!-- Formulario -->
+    <section class="formulario">
+        <input type="text" id="nombreProducto" placeholder="Nombre del producto">
+        <input type="number" id="precioProducto" placeholder="Precio">
+        <input type="number" id="cantidadProducto" placeholder="Cantidad">
+        <button id="botonAgregar">Agregar</button>
+    </section>
+
+    <!-- Tabla -->
+    <section class="tabla-contenedor">
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tablaProductos">
+                <!-- Filas dinámicas -->
+            </tbody>
+        </table>
+    </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
