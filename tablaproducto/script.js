@@ -5,15 +5,15 @@ const cantidad = document.getElementById("cantidad");
 const agregar = document.getElementById("agregar");
 const tabla = document.getElementById("tabla");
 
-// Cargar datos
-let datos = JSON.parse(localStorage.getItem("tablaGlass")) || [];
+// Datos guardados
+let productos = JSON.parse(localStorage.getItem("productosDashboard")) || [];
 renderizar();
 
 // Agregar producto
 agregar.addEventListener("click", () => {
     if (!producto.value || !precio.value || !cantidad.value) return;
 
-    datos.push({
+    productos.push({
         producto: producto.value,
         precio: precio.value,
         cantidad: cantidad.value
@@ -24,22 +24,22 @@ agregar.addEventListener("click", () => {
     limpiar();
 });
 
-// Renderizar tabla
+// Mostrar productos
 function renderizar() {
     tabla.innerHTML = "";
 
-    datos.forEach((item, index) => {
+    productos.forEach((item, index) => {
         const fila = document.createElement("tr");
 
         fila.innerHTML = `
             <td contenteditable="true">${item.producto}</td>
             <td contenteditable="true">${item.precio}</td>
             <td contenteditable="true">${item.cantidad}</td>
-            <td><button class="eliminar">✖</button></td>
+            <td><button class="eliminar">Eliminar</button></td>
         `;
 
         fila.querySelector(".eliminar").onclick = () => {
-            datos.splice(index, 1);
+            productos.splice(index, 1);
             guardar();
             renderizar();
         };
@@ -57,12 +57,12 @@ function renderizar() {
     });
 }
 
-// Guardar datos
+// Guardar
 function guardar() {
-    localStorage.setItem("tablaGlass", JSON.stringify(datos));
+    localStorage.setItem("productosDashboard", JSON.stringify(productos));
 }
 
-// Limpiar inputs
+// Limpiar
 function limpiar() {
     producto.value = "";
     precio.value = "";
