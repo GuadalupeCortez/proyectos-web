@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería con Catálogos</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<header class="hero">
+    <h1>Galería Creativa</h1>
+    <p>Explora por categorías</p>
+</header>
+
+<!-- Filtros -->
+<nav class="filtros">
+    <button class="filtro activo" data-categoria="todos">Todos</button>
+    <button class="filtro" data-categoria="fotografia">Fotografía</button>
+    <button class="filtro" data-categoria="diseno">Diseño</button>
+    <button class="filtro" data-categoria="arte">Arte</button>
+    <button class="filtro" data-categoria="ui">UI</button>
+</nav>
+
+<!-- Galería -->
+<main class="contenedor">
+
+    <article class="card" data-categoria="fotografia">
+        <img src="https://picsum.photos/600/400?random=11" alt="">
+        <div class="contenido">
+            <span class="tag fotografia">Fotografía</span>
+            <h2>Luz urbana</h2>
+            <p>Exploración de sombras y color.</p>
+        </div>
+    </article>
+
+    <article class="card" data-categoria="diseno">
+        <img src="https://picsum.photos/600/400?random=12" alt="">
+        <div class="contenido">
+            <span class="tag diseno">Diseño</span>
+            <h2>Composición visual</h2>
+            <p>Jerarquía y equilibrio.</p>
+        </div>
+    </article>
+
+    <article class="card" data-categoria="arte">
+        <img src="https://picsum.photos/600/400?random=13" alt="">
+        <div class="contenido">
+            <span class="tag arte">Arte</span>
+            <h2>Arte digital</h2>
+            <p>Creatividad sin límites.</p>
+        </div>
+    </article>
+
+    <article class="card" data-categoria="ui">
+        <img src="https://picsum.photos/600/400?random=14" alt="">
+        <div class="contenido">
+            <span class="tag ui">UI</span>
+            <h2>Interfaz moderna</h2>
+            <p>Diseño centrado en el usuario.</p>
+        </div>
+    </article>
+
+</main>
+
+<footer class="footer">
+    <p>© 2026 Galería creativa</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
