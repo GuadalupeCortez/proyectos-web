@@ -1,0 +1,78 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Fondo base (se cambia por JS) */
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 1s ease;
+}
+
+/* Contenedor */
+.contenedor {
+    padding: 20px;
+}
+
+/* Tarjeta moderna */
+.tarjeta {
+    width: 100%;
+    max-width: 420px;
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 0 40px rgba(255,255,255,0.3);
+    text-align: center;
+    color: #fff;
+}
+
+/* Título */
+.tarjeta h1 {
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+}
+
+/* Mensaje */
+.tarjeta p {
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+/* Hora */
+.hora {
+    font-size: 3rem;
+    margin-bottom: 25px;
+    font-weight: bold;
+    text-shadow: 0 0 15px rgba(255,255,255,0.7);
+}
+
+/* Botón */
+button {
+    padding: 14px 25px;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    background: #ffffff;
+    color: #000;
+    box-shadow: 0 0 20px rgba(255,255,255,0.8);
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255,255,255,1);
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+    .hora {
+        font-size: 2.5rem;
+    }
+}
